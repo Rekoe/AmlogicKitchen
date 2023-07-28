@@ -246,8 +246,13 @@ class Extractor(object):
                                 '/', os.sep).replace(' ', '_').replace('"', '')
                         if not os.path.isdir(os.path.dirname(file_target)):
                             os.makedirs(os.path.dirname(file_target))
-                        with open(file_target, 'wb') as out:
-                            out.write(raw)
+                        try:    
+                            with open(file_target, 'wb') as out:
+                                out.write(raw)
+                        except:
+                            file_target = '\\\?\\'+file_target
+                            with open(file_target, 'wb') as out:
+                                out.write(raw)
                     if os.name == 'posix':
                         file_target = self.EXTRACT_DIR + \
                             entry_inode_path.replace(' ', '_').replace('"', '')
